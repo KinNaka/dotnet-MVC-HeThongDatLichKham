@@ -1,0 +1,65 @@
+﻿
+@using HeThongDatLichKham.ViewModels;
+@model LoginViewModel;
+
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+@if (Context.Request.Query.ContainsKey("ReturnUrl"))
+{
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999">
+        <div class="toast show align-items-center text-bg-warning border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    ⚠️ Vui lòng đăng nhập để tiếp tục sử dụng chức năng đặt lịch khám.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div class="account-box">
+    <h2 class="text-center mb-4">Đăng nhập</h2>
+    <form asp-action="LoginPage" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label">Mật Khẩu</label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="float-end">
+            <a asp-controller="Account" asp-action="VerifyEmailPage" class="text-decoration-none">
+                Quên mật khẩu?
+            </a>
+        </div>
+        <div class="form-check mb-3">
+            <label class="form-check-label">
+                <input asp-for="Rememberme" class="form-check-input" />
+                @Html.DisplayNameFor(a => a.Rememberme)
+            </label>
+        </div>
+        <input type="submit" value="Đăng Nhập" class="btn btn-success w-100 p-2" />
+        <p class="text-center mt-2">
+            Chưa có tài khoản? <a asp-controller="Account" asp-action="RegisterPage" class="text-decoration-none">Đăng ký</a>
+        </p>
+        <div class="text-center">
+            <a asp-controller="Home" asp-action="Index" class="text-decoration-none mt-3">Trờ về</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+                }

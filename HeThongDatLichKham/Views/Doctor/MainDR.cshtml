@@ -1,0 +1,72 @@
+﻿@model List<HeThongDatLichKham.Models.DatLich>
+
+@{
+    ViewData["Title"] = "Trang Bác Sĩ";
+}
+
+<h2>Trang Bác Sĩ</h2>
+
+<div class="alert alert-info" id="notificationArea">
+    <strong>Thông báo:</strong> Đang chờ nhận thông báo lịch hẹn mới...
+</div>
+
+<hr />
+<a asp-controller="Home" asp-action="Index" class="btn btn-secondary mt-3">
+    ⬅️ Trở về Trang Chủ
+</a>
+<hr />
+
+<h4>📅 Danh sách lịch hẹn hôm nay</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>👤CCCD</th>
+            <th>🕒 Thời gian</th>
+            <th>🏥 Ghi chú</th>
+            <th>Ca khám</th>
+            <th>STT</th>
+            <th>✅ Đã khám</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CCCD</td>
+                <td>@item.NgayKham.ToString("dd/MM/yyyy")</td>
+                <td>@item.LoaiKham</td>
+                <td>@item.Ca</td>
+                <td>@item.STT</td>
+                <td>
+                    <form asp-action="DaKham" asp-controller="Doctor" method="post">
+                        <input type="hidden" name="id" value="@item.IDDatLich" />
+                        <button type="submit" class="btn btn-success">Đã khám</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/notihub")
+        .withAutomaticReconnect()
+        .build();
+
+    connection.start().then(() => {
+        console.log("✅ Đã kết nối SignalR");
+    }).catch(err => {
+        console.error("❌ Kết nối thất bại:", err);
+    });
+
+    connection.on("NewAppointment", function (message, date) {
+        alert("🔔 " + message + " - Ngày: " + date);
+        document.getElementById("notificationArea").innerText = "🔔 " + message + " - " + date;
+    });
+    setTimeout(function () {
+            location.reload();
+        }, 3000);
+    });
+</script>

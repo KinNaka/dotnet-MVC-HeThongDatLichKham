@@ -1,0 +1,45 @@
+﻿@model List<HeThongDatLichKham.Models.LichLamViec>
+@{
+    ViewData["Title"] = "Quản lý lịch làm việc";
+}
+
+<h2>Quản lý lịch làm việc</h2>
+
+<a asp-action="CreateSchedule" class="btn btn-success mb-3">➕ Thêm lịch làm việc</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Bác sĩ</th>
+            <th>Ngày</th>
+            <th>Ca</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var today = DateTime.Today;
+            var status = item.Ngay.Date < today ? "Đã qua" : "Sắp tới";
+            var statusClass = item.Ngay.Date < today ? "text-muted" : "text-success";
+
+            <tr>
+                <td>
+                    Họ tên: @(item.BacSi?.HoTen ?? "Không có")
+                </td>
+
+                <td>@item.Ngay.ToString("dd/MM/yyyy")</td>
+                <td>@item.Ca</td>
+                <td class="@statusClass">@status</td>
+                <td>
+                    <a asp-action="EditSchedule" asp-route-id="@item.MaLich" class="btn btn-sm btn-warning">Sửa</a>
+                    <form asp-action="DeleteSchedule" asp-route-id="@item.MaLich" method="post" style="display:inline;" onsubmit="return confirm('Bạn có chắc muốn xóa lịch này?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Index" class="btn btn-secondary">⬅️ Back to Admin Panel</a>

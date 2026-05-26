@@ -1,0 +1,22 @@
+﻿@model HeThongDatLichKham.ViewModels.BookingViewModel
+
+@{
+    ViewData["Title"] = "Kết quả đặt lịch khám";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="alert alert-success text-center shadow p-4 rounded">
+        <h4 class="mb-3">🎉 Đặt lịch thành công!</h4>
+
+        <p><strong>Họ tên bệnh nhân:</strong> @Model.HoTenBenhNhan</p>
+        <p><strong>CCCD:</strong> @Model.CCCD</p>
+        <p><strong>Ngày khám:</strong> @Model.NgayKham.ToString("dd/MM/yyyy")</p>
+        <p><strong>Loại khám:</strong> @Model.LoaiKham</p>
+        <p><strong>Bác sĩ:</strong> @Model.TenBacSi</p>
+        <p><strong>Bệnh viện:</strong> @Model.TenBenhVien</p>
+        <p><strong>Số thứ tự:</strong> @Model.STT</p>
+
+        <a href="/Booking/Booking" class="btn btn-outline-primary mt-4">Đặt lịch khác</a>
+    </div>
+</div>

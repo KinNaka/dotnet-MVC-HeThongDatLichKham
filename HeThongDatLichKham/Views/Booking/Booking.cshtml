@@ -1,0 +1,184 @@
+﻿@{
+    ViewData["Title"] = "Đặt lịch khám";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="home-container">
+    <div class="header-container">
+        <div class="nav-bar">
+            <div class="d-flex gap-5">
+                <a asp-controller="Home" asp-action="Index" class="nav-link-item">Trang chủ</a>
+                <a href="#" class="nav-link-item">Giới thiệu</a>
+                <a href="#" class="nav-link-item">Liên hệ</a>
+                <a href="#" class="nav-link-item">Hướng dẫn</a>
+                <a href="/Booking/Booking" class="nav-link-item">Đặt lịch</a>
+
+            </div>
+
+            <div class="d-flex align-items-center gap-4">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <p class="nav-bar-item">Xin chào, @User.Identity.Name!</p>
+                    <a href="/Account/Logout" class="btn btn-danger">Đăng xuất</a>
+                }
+                else
+                {
+                    <a href="/Account/LoginPage" class="btn btn-primary">Đăng nhập</a>
+                    <a href="/Account/RegisterPage" class="btn btn-success">Đăng ký</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="booking-container">
+        <form asp-action="BookApo" asp-controller="Booking" method="post" id="bookingForm">
+            <div class="mb-3">
+                <label class="form-label">CCCD:</label>
+                <input type="text" name="CCCD" class="form-control" id="cccdInput" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Họ tên:</label>
+                <input type="text" name="HoTen" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Ngày sinh:</label>
+                <input type="date" name="NgaySinh" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Giới tính:</label>
+                <select name="GioiTinh" class="form-select">
+                    <option value="true">Nam</option>
+                    <option value="false">Nữ</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Địa chỉ:</label>
+                <input type="text" name="DiaChi" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Số điện thoại:</label>
+                <input type="text" name="SoDienThoai" class="form-control" required />
+            </div>
+            <input type="hidden" name="MaBenhVien" id="maBenhVienHidden" />
+
+            <div class="mb-3">
+                <label>Chuyên khoa:</label>
+                <select name="SelectedChuyenKhoaId" class="form-select" id="chuyenKhoaSelect" required>
+                    <option value="">-- Chọn chuyên khoa --</option>
+                    @foreach (var ck in Model.ChuyenKhoas)
+                    {
+                        <option value="@ck.IDChuyenKhoa">@ck.TenChuyenKhoa</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3" id="ngayKhamContainer">
+                <label class="form-label">Ngày khám:</label>
+                <select name="NgayKham" class="form-select" id="ngayKhamInput" required>
+                    <option value="">-- Chọn ngày --</option>
+                </select>
+            </div>
+
+
+            <input type="hidden" name="MaBacSi" id="bacSiHiddenInput" />
+
+            <div class="mb-3" id="caKhamContainer" style="display:none;">
+                <label>Ca khám:</label>
+                <select name="CaKham" class="form-select" id="caKhamSelect" required>
+                    <option value="">-- Chọn ca --</option>
+                </select>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Đặt lịch</button>
+        </form>
+
+    </div>
+</div>
+@section Scripts {
+    <script>
+        const cccdInput = document.getElementById("cccdInput");
+        const chuyenKhoaSelect = document.getElementById("chuyenKhoaSelect");
+        const ngayKhamInput = document.getElementById("ngayKhamInput");
+        const caKhamContainer = document.getElementById("caKhamContainer");
+        const caKhamSelect = document.getElementById("caKhamSelect");
+        const bacSiHiddenInput = document.getElementById("bacSiHiddenInput");
+
+        let lichData = {}; 
+
+        async function loadNgayVaCa() {
+            const cccd = cccdInput.value;
+            const chuyenKhoaId = chuyenKhoaSelect.value;
+
+            if (!cccd || !chuyenKhoaId) return;
+            const response = await fetch(`/Booking/GetNgayVaCa_TaiKham?cccd=${cccd}&chuyenKhoaId=${chuyenKhoaId}`);
+            const data = await response.json();
+            console.log(data);
+                    if (data.isFollowUp) {
+            alert("Tái khám - hệ thống sẽ đặt lịch với bác sĩ: " + data.hoTen);
+                    document.getElementById("bacSiHiddenInput").value = data.maBacSi;
+        document.getElementById("maBenhVienHidden").value = data.maBenhVien;
+
+            } else {
+                alert("Lần đầu khám - hệ thống sẽ chọn bác sĩ phù hợp.");
+                    bacSiHiddenInput.value = "";
+        document.getElementById("maBenhVienHidden").value = "";
+                const res2 = await fetch(`/Booking/GetNgayVaCa_KhamLanDau?chuyenKhoaId=${chuyenKhoaId}`);
+                const data2 = await res2.json();
+                data.lich = data2.lich;
+            }
+            lichData = {};
+            data.lich.forEach(item => {
+                if (!lichData[item.ngay]) {
+                    lichData[item.ngay] = [];
+                }
+                lichData[item.ngay].push(item.ca);
+            });
+            updateNgayKhamOptions(Object.keys(lichData));
+            caKhamContainer.style.display = "block";
+        }
+
+                function updateNgayKhamOptions(ngayList) {
+            ngayKhamInput.innerHTML = "";
+            if (ngayList.length > 0) {
+                ngayList.forEach(ngay => {
+                    const opt = document.createElement("option");
+                    opt.value = ngay;
+                    opt.textContent = ngay;
+                    ngayKhamInput.appendChild(opt);
+                });
+
+                ngayKhamInput.value = ngayList[0];
+                updateCaKhamOptions(lichData[ngayList[0]]);
+            }
+        }
+
+
+        function updateCaKhamOptions(caList) {
+            caKhamSelect.innerHTML = "";
+            caList.forEach(ca => {
+                const opt = document.createElement("option");
+                opt.value = ca;
+                opt.textContent = `Ca ${ca}`;
+                caKhamSelect.appendChild(opt);
+            });
+        }
+
+        ngayKhamInput.addEventListener("change", function () {
+            const selectedNgay = this.value;
+            const caList = lichData[selectedNgay] || [];
+            updateCaKhamOptions(caList);
+        });
+
+        cccdInput.addEventListener("blur", loadNgayVaCa);
+        chuyenKhoaSelect.addEventListener("change", loadNgayVaCa);
+    </script>
+}
+
+}
+

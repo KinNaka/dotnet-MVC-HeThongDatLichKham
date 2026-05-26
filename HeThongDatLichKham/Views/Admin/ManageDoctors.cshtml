@@ -1,0 +1,37 @@
+﻿@model List<HeThongDatLichKham.Models.BacSi>
+@{
+    ViewData["Title"] = "Quản lý bác sĩ";
+}
+
+<h2>Quản lý bác sĩ</h2>
+
+<a asp-action="CreateDoctor" class="btn btn-success mb-3">Thêm bác sĩ</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mã bác sĩ</th>
+            <th>Họ tên</th>
+            <th>SĐT</th>
+            <th>Email</th>
+            <th>Chuyên khoa</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var doctor in Model)
+        {
+            <tr>
+                <td>@doctor.MaBacSi</td>
+                <td>@doctor.HoTen</td>
+                <td>@doctor.SoDienThoai</td>
+                <td>@doctor.Email</td>
+                <td>@doctor.ChuyenKhoa?.TenChuyenKhoa</td>
+                <td>
+                    <a asp-action="EditDoctor" asp-route-id="@doctor.MaBacSi" class="btn btn-warning btn-sm">Sửa</a>
+                    <a asp-action="DeleteDoctor" asp-route-id="@doctor.MaBacSi" class="btn btn-danger btn-sm">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Index" class="btn btn-secondary">⬅️ Back to Admin Panel</a>

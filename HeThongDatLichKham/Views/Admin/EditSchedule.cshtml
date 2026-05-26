@@ -1,0 +1,23 @@
+﻿@model CreateScheduleViewModel
+@{
+    ViewData["Title"] = "Sửa lịch làm việc";
+}
+
+<h2>Sửa lịch làm việc</h2>
+
+<form asp-action="EditSchedule" asp-route-id="@ViewBag.MaLich" method="post">
+    <div class="mb-3">
+        <label class="form-label">Bác sĩ</label>
+        <select asp-for="MaBacSi" asp-items="Model.BacSiList" class="form-select"></select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Ngày</label>
+        <input asp-for="Ngay" class="form-control" type="date" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Ca</label>
+        <input asp-for="Ca" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+</form>
+<a asp-action="Index" class="btn btn-secondary">⬅️ Back to Admin Panel</a>

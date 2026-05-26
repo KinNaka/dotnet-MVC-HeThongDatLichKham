@@ -1,0 +1,40 @@
+﻿@model CreateScheduleViewModel
+
+@{
+    ViewData["Title"] = "Tạo Lịch Làm Việc";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<form asp-action="CreateSchedule" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="MaBacSi" class="form-label">Bác sĩ</label>
+        <select asp-for="MaBacSi" class="form-select" asp-items="Model.BacSiList">
+            <option value="">-- Chọn bác sĩ --</option>
+        </select>
+        <span asp-validation-for="MaBacSi" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Ngay" class="form-label">Ngày làm việc</label>
+        <input asp-for="Ngay" class="form-control" type="date" />
+        <span asp-validation-for="Ngay" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Ca" class="form-label">Ca làm</label>
+        <input asp-for="Ca" class="form-control" />
+        <span asp-validation-for="Ca" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu</button>
+</form>
+<a asp-action="Index" class="btn btn-secondary">⬅️ Back to Admin Panel</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

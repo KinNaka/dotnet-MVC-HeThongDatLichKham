@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Trang Chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="home-container">
+    <div class="dec-body"></div>
+
+    <!-- NAVIGATION -->
+    <div class="header-container">
+        <div class="nav-bar flex-wrap">
+            <div class="d-flex flex-wrap gap-3">
+                <a asp-controller="Home" asp-action="Index" class="nav-link-item">Trang chủ</a>
+                <a asp-controller="Home" asp-action="GioiThieu" class="nav-link-item">Giới thiệu</a>
+                <a asp-controller="Home" asp-action="LienHe" class="nav-link-item">Liên hệ</a>
+                <a asp-controller="Home" asp-action="HuongDan" class="nav-link-item">Hướng dẫn</a>
+                <a href="/Booking/Booking" class="nav-link-item">Đặt lịch</a>
+            </div>
+
+            <div class="d-flex align-items-center flex-wrap gap-2 mt-2">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <p class="nav-bar-item mb-0">Xin chào, @User.Identity.Name!</p>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a href="/Admin" class="btn btn-warning btn-sm">Trang Admin</a>
+                    }
+                    else if (User.IsInRole("Doctor"))
+                    {
+                        <a href="/Doctor/MainDR" class="btn btn-info btn-sm">Trang Bác sĩ</a>
+                    }
+
+                    <a href="/Account/Logout" class="btn btn-danger btn-sm">Đăng xuất</a>
+                }
+                else
+                {
+                    <a href="/Account/LoginPage" class="btn btn-primary btn-sm">Đăng nhập</a>
+                    <a href="/Account/RegisterPage" class="btn btn-success btn-sm">Đăng ký</a>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOKING INTRO BOX -->
+    <div class="booking-container">
+        <h2 class="text-center mb-4 text-primary">Đặt lịch khám bệnh</h2>
+        <p class="text-muted mb-4 text-center">
+            Đăng ký lịch khám online dễ dàng – nhanh chóng – tiện lợi chỉ với vài bước đơn giản.
+        </p>
+        <div class="text-center">
+            <a href="/Booking/Booking" class="btn btn-primary btn-lg">Đặt lịch ngay</a>
+        </div>
+    </div>
+</div>
+
+
+<!-- GIỚI THIỆU -->
+<section class="container my-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h3 class="mb-3">Vì sao nên đặt lịch online?</h3>
+            <ul class="list-unstyled">
+                <li>✅ Không cần chờ đợi tại bệnh viện</li>
+                <li>✅ Chủ động chọn chuyên khoa & thời gian khám</li>
+                <li>✅ Nhắc lịch tự động qua email/SMS</li>
+                <li>✅ Lưu trữ lịch sử khám & tái khám</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <img src="https://img.freepik.com/free-vector/hospital-building-healthcare-cartoon_1150-35028.jpg?w=826&t=st=1719280000~exp=1719280600~hmac=demo"
+                 alt="Hình bệnh viện" class="img-fluid rounded shadow" />
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer-container">
+    <div class="footer-1 p-4 w-50">
+        <h5>Hệ thống đặt lịch khám</h5>
+        <p>Trải nghiệm công nghệ y tế hiện đại – phục vụ tận tâm.</p>
+    </div>
+    <div class="footer-2 p-4 w-50 text-white">
+        <h5>Liên hệ</h5>
+        <p>Email: hotro@benhvien.vn</p>
+        <p>Hotline: 1900 9999</p>
+        <p>Địa chỉ: 123 Nguyễn Văn Cừ, Ninh Kiều, Cần Thơ</p>
+    </div>
+</div>

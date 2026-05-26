@@ -1,0 +1,51 @@
+﻿@model HeThongDatLichKham.ViewModels.BacSiViewModel
+
+@{
+    ViewData["Title"] = "Thêm bác sĩ";
+}
+<hr />
+<h2>Thêm bác sĩ</h2>
+<form asp-controller="Admin" asp-action="CreateDoctor" method="post">
+
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <label>Mã bác sĩ</label>
+        <input asp-for="MaBacSi" class="form-control" />
+        <span asp-validation-for="MaBacSi" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Họ tên</label>
+        <input asp-for="HoTen" class="form-control" />
+        <span asp-validation-for="HoTen" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Số điện thoại</label>
+        <input asp-for="SoDienThoai" class="form-control" />
+        <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Thông tin</label>
+        <textarea asp-for="ThongTin" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label>Chuyên khoa</label>
+        <select asp-for="IDChuyenKhoa" asp-items="Model.ChuyenKhoaList" class="form-select"></select>
+        <span asp-validation-for="IDChuyenKhoa" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Bệnh viện</label>
+        <select asp-for="MaBenhVien" asp-items="Model.BenhVienList" class="form-select"></select>
+        <span asp-validation-for="MaBenhVien" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+</form>
+<a asp-action="Index" class="btn btn-secondary">⬅️ Back to Admin Panel</a>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

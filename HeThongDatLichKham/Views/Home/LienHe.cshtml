@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="home-container">
+    <div class="dec-body"></div>
+
+    <div class="header-container">
+        <div class="nav-bar">
+            <div class="d-flex gap-5 flex-wrap">
+                <a asp-controller="Home" asp-action="Index" class="nav-link-item">Trang chủ</a>
+                <a asp-action="GioiThieu" class="nav-link-item">Giới thiệu</a>
+                <a asp-action="LienHe" class="nav-link-item active">Liên hệ</a>
+                <a asp-action="HuongDan" class="nav-link-item">Hướng dẫn</a>
+                <a href="/Booking/Booking" class="nav-link-item">Đặt lịch</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5 p-4 bg-white rounded shadow" style="z-index: 2; position: relative;">
+        <h2 class="text-primary mb-4">Liên hệ với chúng tôi</h2>
+
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    <li><strong>Hotline:</strong> 1900 9999</li>
+                    <li><strong>Email:</strong> hotro@benhvien.vn</li>
+                    <li><strong>Địa chỉ:</strong> 123 Nguyễn Văn Cừ, Ninh Kiều, Cần Thơ</li>
+                </ul>
+                <img src="https://img.freepik.com/free-vector/contact-us-concept-landing-page_52683-12860.jpg" class="img-fluid rounded mt-3 shadow-sm" />
+            </div>
+
+            <div class="col-md-6">
+                <h4 class="mb-3">Gửi liên hệ trực tuyến</h4>
+                <form method="post" action="/Home/LienHe">
+                    <div class="mb-3">
+                        <label class="form-label">Họ tên</label>
+                        <input type="text" class="form-control" name="HoTen" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="Email" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nội dung</label>
+                        <textarea class="form-control" rows="4" name="NoiDung" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Gửi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

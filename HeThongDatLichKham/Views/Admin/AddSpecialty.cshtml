@@ -1,0 +1,28 @@
+﻿@model HeThongDatLichKham.ViewModels.ChuyenKhoaViewModel
+
+@{
+    ViewData["Title"] = "Thêm chuyên khoa";
+}
+<h2 class="mb-4">➕ Thêm chuyên khoa</h2>
+
+<form asp-action="AddSpecialty" method="post" class="needs-validation">
+    <div class="mb-3">
+        <label asp-for="IDChuyenKhoa" class="form-label"></label>
+        <input asp-for="IDChuyenKhoa" class="form-control" />
+        <span asp-validation-for="IDChuyenKhoa" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="TenChuyenKhoa" class="form-label"></label>
+        <input asp-for="TenChuyenKhoa" class="form-control" required />
+        <span asp-validation-for="TenChuyenKhoa" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MoTa" class="form-label"></label>
+        <textarea asp-for="MoTa" class="form-control"></textarea>
+        <span asp-validation-for="MoTa" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">💾 Lưu</button>
+    <a asp-action="ManageSpecialties" class="btn btn-secondary">Hủy</a>
+</form>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">⬅️ Trờ về trang Admin</a>

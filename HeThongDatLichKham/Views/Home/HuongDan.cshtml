@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Hướng dẫn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="home-container">
+    <div class="dec-body"></div>
+
+    <div class="header-container">
+        <div class="nav-bar">
+            <div class="d-flex gap-5 flex-wrap">
+                <a asp-controller="Home" asp-action="Index" class="nav-link-item">Trang chủ</a>
+                <a asp-action="GioiThieu" class="nav-link-item">Giới thiệu</a>
+                <a asp-action="LienHe" class="nav-link-item">Liên hệ</a>
+                <a asp-action="HuongDan" class="nav-link-item active">Hướng dẫn</a>
+                <a href="/Booking/Booking" class="nav-link-item">Đặt lịch</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5 p-4 bg-white rounded shadow" style="z-index: 2; position: relative;">
+        <h2 class="text-primary mb-4">Hướng dẫn đặt lịch khám</h2>
+        <ol class="list-group list-group-numbered">
+            <li class="list-group-item">Vào trang <strong><a href="/Booking/Booking">Đặt lịch</a></strong>.</li>
+            <li class="list-group-item">Nhập số CCCD để kiểm tra lịch sử khám.</li>
+            <li class="list-group-item">Chọn chuyên khoa, bác sĩ, ngày và ca khám.</li>
+            <li class="list-group-item">Xác nhận và lấy số thứ tự.</li>
+            <li class="list-group-item">Nhận thông báo nhắc lịch qua SMS/Email.</li>
+        </ol>
+        <img src="https://img.freepik.com/premium-vector/healthcare-app-interface-concept_701961-55.jpg"
+             class="img-fluid rounded mt-4 shadow-sm" style="max-height: 300px;" />
+    </div>
+</div>

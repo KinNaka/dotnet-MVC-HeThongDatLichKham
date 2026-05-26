@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Trang quản trị";
+}
+
+<div class="container mt-4">
+    <hr />
+    <button class="btn btn-outline-secondary" onclick="window.history.back();">
+        ⬅ Quay lại
+    </button>
+    <hr />
+    <h2 class="mb-4 text-primary">⚙️ Trang Quản Trị</h2>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">👨‍⚕️ Quản lý Bác Sĩ</h5>
+                    <p class="card-text">Xem, thêm, sửa thông tin bác sĩ.</p>
+                    <a asp-action="ManageDoctors" class="btn btn-outline-primary">Đi tới</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">📅 Quản lý Lịch Làm Việc</h5>
+                    <p class="card-text">Thêm và phân lịch làm việc cho bác sĩ.</p>
+                    <a asp-action="ManageSchedules" class="btn btn-outline-primary">Đi tới</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">🏥 Quản lý chuyên khoa</h5>
+                    <p class="card-text">Thêm và phân lịch làm việc cho bác sĩ.</p>
+                    <a asp-action="ManageSpecialties" class="btn btn-outline-primary">Đi tới</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-end mt-4">
+        <a asp-action="CreateDoctorAccount" class="btn btn-success">➕ Tạo Tài Khoản Bác Sĩ</a>
+    </div>
+</div>

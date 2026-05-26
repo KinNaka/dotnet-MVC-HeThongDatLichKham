@@ -1,0 +1,34 @@
+﻿@model List<HeThongDatLichKham.Models.ChuyenKhoa>
+@{
+    ViewData["Title"] = "Quản lý chuyên khoa";
+}
+<h2 class="mb-4">📋 Manage Specialties</h2>
+<a asp-action="AddSpecialty" class="btn btn-primary mb-3">➕ Add New Specialty</a>
+<table class="table table-bordered table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ck in Model)
+        {
+            <tr>
+                <td>@ck.IDChuyenKhoa</td>
+                <td>@ck.TenChuyenKhoa</td>
+                <td>@ck.MoTa</td>
+                <td>
+                    <a asp-action="EditSpecialty" asp-route-id="@ck.IDChuyenKhoa" class="btn btn-warning btn-sm">✏️ Edit</a>
+                    <form asp-action="DeleteSpecialty" asp-route-id="@ck.IDChuyenKhoa" method="post" class="d-inline" onsubmit="return confirm('Are you sure to delete this specialty?');">
+                        <button type="submit" class="btn btn-danger btn-sm">🗑️ Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">⬅️ Back to Admin Panel</a>

@@ -1,0 +1,32 @@
+﻿@using HeThongDatLichKham.ViewModels;
+@model VerifyEmailPhone;
+
+
+@{
+    ViewData["Title"] = "Xác thực tài khoản";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div class="account-box">
+    <h2 class="text-center mb-4">Xác thực tài khoản</h2>
+    <form asp-action="VerifyEmail" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <input type="submit" value="Xác Nhận" class="btn btn-success w-100 p-2" />
+
+        <div class="text-center mt-2">
+            <a asp-controller="Home" asp-action="Index" class="text-decoration-none mt-3">Trờ về</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+                }

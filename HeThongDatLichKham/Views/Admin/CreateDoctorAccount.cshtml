@@ -1,0 +1,41 @@
+﻿@model HeThongDatLichKham.ViewModels.CreateDoctorAccountViewModel
+
+@{
+    ViewData["Title"] = "Tạo Tài Khoản Bác Sĩ";
+}
+
+<hr />
+<h3 class="text-success">➕ Tạo Tài Khoản Bác Sĩ</h3>
+
+<form asp-action="CreateDoctorAccount" method="post">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input asp-for="Email" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Mật khẩu</label>
+        <input asp-for="Password" type="password" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Nhập lại mật khẩu</label>
+        <input asp-for="ConfirmPassword" type="password" class="form-control" />
+        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Chọn bác sĩ để gán tài khoản</label>
+        <select asp-for="SelectedMaBacSi" asp-items="Model.BacSiList" class="form-select"></select>
+        @Html.ValidationMessageFor(m => m.SelectedMaBacSi, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Tạo tài khoản</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>
+<a asp-action="Index" class="btn btn-secondary">⬅️ Back to Admin Panel</a>
